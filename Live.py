@@ -4,7 +4,7 @@ from CurrencyRouletteGame import play_currencies_game
 
 # text for input
 choose_game_text = 'Please choose a game to play from 1 to 3: '
-choose_game_difficulty_text = 'Please choose a game difficulty from 1 to 5 :'
+choose_game_difficulty_text = 'Please choose a game difficulty from 1 to 5:'
 
 # Welcome function
 def welcome(name):

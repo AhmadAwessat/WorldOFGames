@@ -6,4 +6,3 @@ services:
     image: worldofgames:latest
     ports:
       - "8777:8777"
-    # Uncomment the next line if you want to run the python script via docker-compose

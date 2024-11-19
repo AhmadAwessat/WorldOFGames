@@ -23,7 +23,7 @@ def get_list_from_user(difficulty):
     global list_guess 
     list_guess = [None] * difficulty 
     for i in range(0,len(list_guess)):
-        guess_number = int(input(f"Please enter the {i+1} guess number "))
+        guess_number = int(input(f"Please enter the {i+1} guess number"))
         list_guess[i] = guess_number
         print(f'{list_guess}')
 
@@ -41,4 +41,4 @@ def play_memory_game(difficulty):
         print('You won!')
         add_score(difficulty)
     else:
-        print('You Lose... try again!')
+        print('You Lost The Game; Try Again Later!')
