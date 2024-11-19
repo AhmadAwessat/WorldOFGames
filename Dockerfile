@@ -1,4 +1,3 @@
-# Use a specific version of Python
 FROM python:3.12
 
 # Copy the requirements.txt file into the container
