@@ -1,0 +1,69 @@
+pipeline {
+    agent any
+    environment {
+        DOCKERHUB_USERNAME = 'ahmadawessat'
+        DOCKERHUB_PASSWORD = credentials('dockerhub-pat') 
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/AhmadAwessat/WorldOfGames.git'
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    // Build the Docker image
+                    sh 'docker build -t ${DOCKERHUB_USERNAME}/worldofgames:latest .'
+                }
+            }
+        }
+        stage('Run Docker Container') {
+            steps {
+                script {
+                    // Run the Docker container
+                    sh 'docker run -d -p 8777:8777 ${DOCKERHUB_USERNAME}/worldofgames:latest'
+                }
+            }
+        }
+        stage('Check if Service is Available') {
+            steps {
+                script {
+                    def maxAttempts = 5
+                    def attempt = 1
+                    while (attempt <= maxAttempts) {
+                        echo "Attempt ${attempt}: Checking if the service is available on http://localhost:8777/"
+                        def response = sh(script: "curl --silent --fail http://localhost:8777/", returnStatus: true)
+                        if (response == 0) {
+                            echo "Service is available on http://localhost:8777/"
+                            break
+                        } else {
+                            echo "Service not available yet. Retrying in 10 seconds..."
+                            sleep(time: 10, unit: 'SECONDS')
+                            attempt++
+                        }
+                    }
+                    if (attempt > maxAttempts) {
+                        error "The service is still not available after ${maxAttempts} attempts."
+                    }
+                }
+            }
+        }
+        stage('Push Docker Image to Docker Hub') {
+            steps {
+                script {
+                    // Login to Docker Hub
+                    sh 'echo ${DOCKERHUB_PASSWORD} | docker login -u ${DOCKERHUB_USERNAME} --password-stdin'
+                    // Push the Docker image to Docker Hub
+                    sh 'docker push ${DOCKERHUB_USERNAME}/worldofgames:latest'
+                }
+            }
+        }
+    }
+    post {
+        always {
+            // Logout from Docker Hub
+            sh 'docker logout'
+        }
+    }
+}
