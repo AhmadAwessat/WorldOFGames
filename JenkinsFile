@@ -32,10 +32,10 @@ pipeline {
                     def maxAttempts = 5
                     def attempt = 1
                     while (attempt <= maxAttempts) {
-                        echo "Attempt ${attempt}: Checking if the service is available on http://0.0.0.0:8777/"
-                        def response = sh(script: "curl --silent --fail http://0.0.0.0:8777/", returnStatus: true)
+                        echo "Attempt ${attempt}: Checking if the service is available on http://localhost:8777/"
+                        def response = sh(script: "curl --silent --fail http://localhost:8777/", returnStatus: true)
                         if (response == 0) {
-                            echo "Service is available on http://0.0.0.0:8777/"
+                            echo "Service is available on http://localhost:8777/"
                             break
                         } else {
                             echo "Service not available yet. Retrying in 10 seconds..."
