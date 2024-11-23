@@ -15,7 +15,7 @@ def generate_sequence(difficulty):
     
     print(randomlist)
     
-    # wait then clear
+    # Wait then clear
     time.sleep(5)
     screen_cleaner()
     

@@ -4,7 +4,6 @@ from selenium.webdriver.common.by import By
 import time
 
 def test_scores_service(url_test):
-    # Provide the correct path to chromedriver.exe
     service = Service("C:\\Users\\Ahmad\\Desktop\\chromedriver-win64\\chromedriver.exe")
     my_driver_for_facebook = webdriver.Chrome(service=service)
 

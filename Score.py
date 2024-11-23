@@ -1,4 +1,4 @@
-#add the score to the txt file
+#Add the score to the .txt file
 def add_score(difficulty):
 
     POINTS_OF_WINNING = (difficulty * 3) + 5
